@@ -39,7 +39,7 @@ def create_predictions():
         model = LiteLLMModel(model_id="gpt-4o")
         agent = ToolCallingAgent(tools=[DuckDuckGoSearchTool(), odds_download_tool], model=model, add_base_tools=True, planning_interval=3, max_steps=10)
 
-        response = agent.run("What teams are most likely to win this week's NRL matches, first use odds_download_tool to get a list of matches and current odds and then also search for commentator and public opinion on the matches. Please give a brief summary of opinion with each prediction and write in the style of Reg Reagan with plenty of biff. Please predict all matches listed in the odds_download_tool. Don't mention the name Reg Reagan and provide a concise final answer in format: Intro (**Match** - Odds\nSummary\nPrediction) Outro")
+        response = agent.run("What teams are most likely to win this week's AFL matches, first use odds_download_tool to get a list of matches and current odds and then also search for commentator and public opinion on the matches. Please give a brief summary of opinion with each prediction and write in the style of Warwick Capper with plenty of personality. Please predict all matches listed in the odds_download_tool. Don't mention the name Warwick Capper and provide a concise final answer in format: Intro (**Match** - Odds\nSummary\nPrediction) Outro")
 
         #response = "Test"
         if response is not None:
