@@ -36,10 +36,20 @@ def chunk_response(text, max_length=2000) -> list[str]:
 def create_predictions():
     try:
 
-        model = LiteLLMModel(model_id="gpt-4o")
+        model = LiteLLMModel(model_id="gpt-4o-mini")
         agent = ToolCallingAgent(tools=[DuckDuckGoSearchTool(), odds_download_tool], model=model, add_base_tools=True, planning_interval=3, max_steps=10)
 
-        response = agent.run("What teams are most likely to win this week's NRL matches, first use odds_download_tool to get a list of matches and current odds and then also search for commentator and public opinion on the matches. Please give a brief summary of opinion with each prediction and write in the style of Reg Reagan with plenty of biff. Please predict all matches listed in the odds_download_tool. Don't mention the name Reg Reagan and provide a concise final answer in format: Intro (**Match** - Odds\nSummary\nPrediction) Outro")
+        query = """
+        What teams are most likely to win this week's NRL matches (2025 season), first use odds_download_tool
+        to get a list of matches and current odds, use the commence_time value to get the date of the match
+        and find out the current round number, and then also search for commentator and public opinion on the
+        matches (verify current round and season with the seaches). Please give a brief summary of opinion with
+        each prediction and write in the style of Reg Reagan with plenty of biff. Please predict all matches
+        listed in the odds_download_tool. Don't mention the name Reg Reagan and provide a concise final answer
+        in format: Intro [**Match** - Odds\nSummary\nPrediction] Outro
+        """
+
+        response = agent.run(query)
 
         #response = "Test"
         if response is not None:
