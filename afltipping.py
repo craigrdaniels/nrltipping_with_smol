@@ -41,7 +41,7 @@ def create_predictions():
         query = """What teams are most likely to win this week's AFL matches (2025 season), first use odds_download_tool
         to get a list of matches and current odds, using the commence_time in the response work out the current round
         and then also search for commentator and public opinion on the matches (verify current round and season when
-        performing serches). Please give a brief summary of opinion
+        performing serches - note AFL has an 'opening round' or Round 0). Please give a brief summary of opinion
         with each prediction and write in the style of Warwick Capper with plenty of personality. Please predict all
         matches listed in the odds_download_tool. Don't  mention the name Warwick Capper and provide a concise final 
         answer in format: Intro [**Match** - Odds\\nSummary\\nPrediction] Outro"""
