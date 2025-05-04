@@ -1,10 +1,11 @@
 import os
 import requests
 from dotenv import load_dotenv
+from datetime import datetime
 
 load_dotenv()
 
-from smolagents import tool, ToolCallingAgent, DuckDuckGoSearchTool, LiteLLMModel
+from smolagents import tool, ToolCallingAgent, DuckDuckGoSearchTool, GoogleSearchTool, LiteLLMModel
 from tools.odds_download_tool import odds_download_tool
 
 def chunk_response(text, max_length=2000) -> list[str]:
@@ -37,14 +38,20 @@ def create_predictions():
     try:
 
         model = LiteLLMModel(model_id="gpt-4o-mini")
-        agent = ToolCallingAgent(tools=[DuckDuckGoSearchTool(), odds_download_tool], model=model, add_base_tools=True, planning_interval=3, max_steps=10)
-        query = """What teams are most likely to win this week's AFL matches (2025 season), first use odds_download_tool
-        to get a list of matches and current odds, using the commence_time in the response work out the current round
-        and then also search for commentator and public opinion on the matches (verify current round and season when
-        performing serches - note AFL has an 'opening round' or Round 0). Please give a brief summary of opinion
-        with each prediction and write in the style of Warwick Capper with plenty of personality. Please predict all
-        matches listed in the odds_download_tool. Don't  mention the name Warwick Capper and provide a concise final 
-        answer in format: Intro [**Match** - Odds\\nSummary\\nPrediction] Outro"""
+        agent = ToolCallingAgent(tools=[DuckDuckGoSearchTool(), odds_download_tool], model=model, add_base_tools=True, planning_interval=5, max_steps=20)
+        date = datetime.now().strftime("%Y-%m-%d")
+        
+        query = f"""Today is {date} (YYYY-MM-DD). Predict what teams are most likely to win this week's round of AFL
+        matches (rounds typically run Thurs-Sun), first use odds_download_tool to get a list of matches and current odds,
+        using the commence_time in the response work out the current round and then also search for commentator and 
+        public opinion on the matches (verify current round and season when performing serches - remember AFL's opening
+        round is round 0). Please give a brief summary of opinion with each prediction and write in the style of
+        Warwick Capper with plenty of personality. Please predict the same number of matches listed in the odds_download_tool -
+        make sure to include each match listed from the download tool and the team you predict to win. If there are no
+        matches this week please state that there are no matches this week and provide a brief summary of the current
+        season status and any interesting news or events in the AFL world.
+        Don't  mention the name Warwick Capper and provide a concise final answer in format: 
+        Intro [**Match** - Odds\\nSummary\\nPrediction] Outro"""
 
         response = agent.run(query)
 

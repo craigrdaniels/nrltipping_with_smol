@@ -9,8 +9,9 @@ beautifulsoup4==4.12.3
 certifi==2025.1.31
 charset-normalizer==3.4.1
 click==8.1.8
+DateTime==5.5
 distro==1.9.0
-duckduckgo_search==7.3.0
+duckduckgo_search==7.5.1
 exceptiongroup==1.2.2
 filelock==3.17.0
 frozenlist==1.5.0
@@ -37,7 +38,7 @@ openai==1.61.0
 packaging==24.2
 pandas==2.2.3
 pillow==11.1.0
-primp==0.11.0
+primp==0.14.0
 propcache==0.2.1
 pydantic==2.10.6
 pydantic_core==2.27.2
@@ -63,3 +64,4 @@ tzdata==2025.1
 urllib3==2.3.0
 yarl==1.18.3
 zipp==3.21.0
+zope.interface==7.2
